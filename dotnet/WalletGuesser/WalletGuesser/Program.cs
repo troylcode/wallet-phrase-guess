@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Collections;
-using System.Linq;
 using Nethereum.HdWallet;
-using System.Reflection;
 
 // read list of english words
 // Converted from UnityScript to C# at http://www.M2H.nl/files/js_to_c.php - by Mike Hergaarden
@@ -63,8 +60,11 @@ public class Program {
         }
     }
 
+    static string KnownPhraseStart => _KnownPhraseStart ??= Environment.GetEnvironmentVariable("KNOWN_PHRASE_START").Trim();
+    static string? _KnownPhraseStart = null;
+
     static void testAddress(string words) {
-        var phrase = Environment.GetEnvironmentVariable("KNOWN_PHRASE_START").Trim() + " " + words;
+        var phrase = KnownPhraseStart + " " + words;
         //Nethereum.Web3.Accounts.Account
         var wallet = new Wallet(phrase, "password2");
         var addresses = wallet.GetAddresses(1);
